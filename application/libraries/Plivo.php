@@ -95,6 +95,18 @@ class Plivo
     }
 
     /**
+     * Send an SMS message
+     * @param array $sms_data
+     * @return type 
+     */
+    public function send_sms($sms_data)
+    {
+        $url = $this->api_version . '/Account/' . $this->auth_id . '/Message/';
+
+        return $this->request($url, 'POST', $sms_data);
+    }
+
+    /**
      * Make a Request 
      * @param type $path
      * @param type $method
@@ -128,6 +140,8 @@ class Plivo
 
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
 
+        curl_setopt($curl, CURLOPT_HTTPHEADER, Array("Content-Type: application/json"));
+
         switch (strtoupper($method))
         {
             case "GET":
@@ -135,7 +149,7 @@ class Plivo
                 break;
             case "POST":
                 curl_setopt($curl, CURLOPT_POST, TRUE);
-                curl_setopt($curl, CURLOPT_POSTFIELDS, $encoded);
+                curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($vars));
                 break;
         }
 
