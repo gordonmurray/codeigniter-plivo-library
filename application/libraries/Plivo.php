@@ -107,6 +107,17 @@ class Plivo
     }
 
     /**
+     * Make an outbound call 
+     * @link http://plivo.com/docs/api/call/#outbound
+     */
+    public function outbound_call($call_data)
+    {
+        $url = $this->api_version . '/Account/' . $this->auth_id . '/Call/';
+
+        return $this->request($url, 'POST', $call_data);
+    }
+
+    /**
      * Make a Request 
      * @param type $path
      * @param type $method
@@ -136,11 +147,11 @@ class Plivo
          */
         $curl = curl_init($url);
 
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
 
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
 
-        curl_setopt($curl, CURLOPT_HTTPHEADER, Array("Content-Type: application/json"));
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
 
         switch (strtoupper($method))
         {
