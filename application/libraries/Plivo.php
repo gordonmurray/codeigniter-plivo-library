@@ -42,7 +42,7 @@ class Plivo
     }
 
     /**
-     * Perform a lookup for available number groups/areas
+     * Perform a lookup for available number groups
      * @link http://plivo.com/docs/api/numbers/availablenumbergroup/
      * @param string $iso
      * @return type
@@ -62,6 +62,36 @@ class Plivo
         );
 
         return $this->request($url, 'GET', $data);
+    }
+
+    /**
+     * Perform a look up for available numbers in a group
+     * @link http://plivo.com/docs/api/numbers/availablenumbergroup/#number_search
+     * @param int $group_id
+     * @return type 
+     */
+    public function available_numbers($group_id)
+    {
+        $url = $this->api_version . '/Account/' . $this->auth_id . '/AvailableNumberGroup/' . $group_id . '/';
+
+        $data = array(
+            'quantity' => '20', //The quantity of numbers that are to be ordered from the number group.
+                //'app_id' => 'local' // The id of the application that you want assigned to the Number. If this is not provided, then it is assigned to the default application of the Account.
+        );
+
+        return $this->request($url, 'POST', $data);
+    }
+
+    /**
+     * Perform a look up about your account
+     * @link http://plivo.com/docs/api/account/
+     * @return type 
+     */
+    public function account()
+    {
+        $url = $this->api_version . '/Account/' . $this->auth_id . '/';
+
+        return $this->request($url, 'GET');
     }
 
     /**
